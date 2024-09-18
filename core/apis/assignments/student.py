@@ -13,6 +13,7 @@ student_assignments_resources = Blueprint('student_assignments_resources', __nam
 def list_assignments(p):
     """Returns list of assignments"""
     students_assignments = Assignment.get_assignments_by_student(p.student_id)
+     # dump() when response in get
     students_assignments_dump = AssignmentSchema().dump(students_assignments, many=True)
     return APIResponse.respond(data=students_assignments_dump)
 
@@ -22,11 +23,16 @@ def list_assignments(p):
 @decorators.authenticate_principal
 def upsert_assignment(p, incoming_payload):
     """Create or Edit an assignment"""
+    # load() when deserializing data -> in post
     assignment = AssignmentSchema().load(incoming_payload)
     assignment.student_id = p.student_id
 
+    # Upsert() -> combination of "update" and "insert" --> insert a new record if it does not exist, or update the existing record if it already exists.
+    # Covers both Creat and Edit POST Apis
     upserted_assignment = Assignment.upsert(assignment)
     db.session.commit()
+
+    # commited in db, now responding for API
     upserted_assignment_dump = AssignmentSchema().dump(upserted_assignment)
     return APIResponse.respond(data=upserted_assignment_dump)
 
