@@ -39,6 +39,25 @@ def test_post_assignment_null_content(client, h_student_1):
     assert response.status_code == 400
 
 
+# give state other than draft to edit
+def test_upsert_update_valid(client, h_student_2):
+    content = 'ABCDmm TESTPOST'
+    """
+    failure case: only assignment in draft state can be edited
+    """
+    response = client.post(
+        '/student/assignments',
+        headers=h_student_2,
+        json={
+            'id': 5,
+            'content': content
+        })
+
+    assert response.status_code == 200
+
+
+
+
 def test_post_assignment_student_1(client, h_student_1):
     content = 'ABCD TESTPOST'
 
