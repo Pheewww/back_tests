@@ -1,7 +1,7 @@
 from flask import Blueprint
 from core import db
 from core.apis import decorators,responses
-from .schema import AssignmentGradeSchema, AssignmentSchema
+from .schema import  AssignmentSchema
 from core.models.assignments import Assignment, AssignmentStateEnum
 from core.models.teachers import Teacher
 
@@ -15,4 +15,3 @@ def get_all_assigments(r):
     all_assignments = Assignment.get_all_assignments_for_principal()
     all_assignments_dump = AssignmentSchema().dump(all_assignments, many=True)
     return responses.APIResponse.respond(data=all_assignments_dump)
-    
