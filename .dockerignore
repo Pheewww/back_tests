@@ -1,0 +1,10 @@
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.git
+*.vscode
+*.pytest_cache
+.htmlcov
+
