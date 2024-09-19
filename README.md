@@ -26,6 +26,7 @@
     docker exec -it <container name> /bin/bash
     rm -f core/store.sqlite3
     flask db upgrade -d core/migrations/
+    bash run.sh       //to run the server
 ```
 5. Run pytest and see coverage report
 ```
